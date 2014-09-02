@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+ï»¿#!/usr/bin/perl -w
 # usage: perl conword.pl srcFolder destFolder
 
 use strict;
@@ -12,79 +12,79 @@ use Win32::OLE::Const 'Microsoft Word';
 $Win32::OLE::Warn = 3;
 
 
-# »ñÈ¡µ±Ç°Ä¿Â¼µÄÍêÕûÂ·¾¶ĞÅÏ¢¡£
+# è·å–å½“å‰ç›®å½•çš„å®Œæ•´è·¯å¾„ä¿¡æ¯ã€‚
 my $currentDir = getcwd;
-print "µ±Ç°Ä¿Â¼: ".$currentDir."\n";
+print "å½“å‰ç›®å½•: ".$currentDir."\n";
 
-# ÉèÖÃÔ´ÎÄ¼ş¼Ğ
+# è®¾ç½®æºæ–‡ä»¶å¤¹
 my $SRC_PATH = "$currentDir/Word/";
 
-# ÉèÖÃÄ¿±êÎÄ¼ş¼Ğ
+# è®¾ç½®ç›®æ ‡æ–‡ä»¶å¤¹
 my $DEST_PATH="$currentDir/TXT/";
 
 deldir($DEST_PATH) if( -d $DEST_PATH);
 
-# Èç¹ûÄ¿±êÎÄ¼ş¼Ğ²»´æÔÚ£¬Ôò´´½¨ÎÄ¼ş¼Ğ
+# å¦‚æœç›®æ ‡æ–‡ä»¶å¤¹ä¸å­˜åœ¨ï¼Œåˆ™åˆ›å»ºæ–‡ä»¶å¤¹
 mkdir( $DEST_PATH, 0777 ) if ( !-d $DEST_PATH);
 
-opendir TEMP, ${SRC_PATH} or die "ÎŞ·¨´ò¿ª".$SRC_PATH."Ä¿Â¼£¬Çë¼ì²éÒ»ÏÂÄ¿Â¼ÊÇ·ñ´æÔÚ£¡";
+opendir TEMP, ${SRC_PATH} or die "æ— æ³•æ‰“å¼€".$SRC_PATH."ç›®å½•ï¼Œè¯·æ£€æŸ¥ä¸€ä¸‹ç›®å½•æ˜¯å¦å­˜åœ¨ï¼";
 
-# ¶ÁÈ¡Ä¿Â¼ÏÂËùÓĞÎÄ¼ş
+# è¯»å–ç›®å½•ä¸‹æ‰€æœ‰æ–‡ä»¶
 my @filelist = readdir TEMP; 
 
 my $srcFile='';
 my $destFile='';
 
-# »ñÈ¡Word³ÌĞò
+# è·å–Wordç¨‹åº
 my $word = get_word();
 
 foreach (@filelist) {
 	next if /^\./; 
-	print "ÕıÔÚ×ª»»: < ".$_." >ÎªÎÄ±¾ÎÄ¼ş...\n";
+	print "æ­£åœ¨è½¬æ¢: < ".$_." >ä¸ºæ–‡æœ¬æ–‡ä»¶...\n";
 	
-	# Ô´ÎÄ¼ş
+	# æºæ–‡ä»¶
 	$srcFile=$SRC_PATH.$_;
     #print $srcFile."\n";
 
-	# ½«ËùÓĞµÄ .DOC/.doc Ìæ»»³É .txt
+	# å°†æ‰€æœ‰çš„ .DOC/.doc æ›¿æ¢æˆ .txt
 	s/.DOCX|.DOC$//i;#replace all .DOC
 
-	# Ä¿±êÎÄ¼ş
+	# ç›®æ ‡æ–‡ä»¶
 	$destFile=$DEST_PATH."$_".'.txt';
 	#print $destFile."\n";
 	
-	# ×ª»»ÎÄ¼ş¸ñÊ½
+	# è½¬æ¢æ–‡ä»¶æ ¼å¼
 	&convert($srcFile, $destFile);
 
 }
 
-# WordÎÄ¼şÁí´æÎªTXTÎÄ¼ş£¬ĞèÒª´«ÈëÁ½¸ö²ÎÊı£º
-# 1. Ô´ÎÄ¼şÍêÕûÂ·¾¶
-# 2. Ä¿±êÎÄ¼şÍêÕûÂ·¾¶
+# Wordæ–‡ä»¶å¦å­˜ä¸ºTXTæ–‡ä»¶ï¼Œéœ€è¦ä¼ å…¥ä¸¤ä¸ªå‚æ•°ï¼š
+# 1. æºæ–‡ä»¶å®Œæ•´è·¯å¾„
+# 2. ç›®æ ‡æ–‡ä»¶å®Œæ•´è·¯å¾„
 sub convert{
 	my $oldFile=shift;
 	my $newFile=shift;
 
 	print $oldFile." -> ".$newFile."\n";
 
-	# Éè¶¨´ò¿ªWordÊ±²»¿É¼û
+	# è®¾å®šæ‰“å¼€Wordæ—¶ä¸å¯è§
 	$word->{Visible} = 0;
 
-	# ´ò¿ªÔ­Ê¼WordÎÄµµ
+	# æ‰“å¼€åŸå§‹Wordæ–‡æ¡£
 	my $doc = $word->{Documents}->Open($oldFile);
 
-	# Áí´æÎªTXTÎÄ¼ş
+	# å¦å­˜ä¸ºTXTæ–‡ä»¶
 	$doc->SaveAs(
 	    $newFile,
 	    wdFormatTextLineBreaks
 	);
 
-	# ¹Ø±ÕWordÎÄµµ
+	# å…³é—­Wordæ–‡æ¡£
 	$doc->Close(0);
 
 }
 
-# »ñÈ¡Microsoft Word³ÌĞò
+# è·å–Microsoft Wordç¨‹åº
 sub get_word {
     my $word;
     eval {
@@ -95,7 +95,7 @@ sub get_word {
 
     unless(defined $word) {
         $word = Win32::OLE->new('Word.Application', sub { $_[0]->Quit })
-            or die "Oops, cannot start Word£¡ ",
+            or die "Oops, cannot start Wordï¼ ",
                    Win32::OLE->LastError, "\n";
     }
     return $word;

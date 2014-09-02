@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+ï»¿#!/usr/bin/perl -w
 
 #require "convertword.pl";
 use strict;
@@ -7,40 +7,40 @@ use Cwd;
 use File::Spec::Functions qw( catfile );
 
 
-# ×ª»»¸ñÊ½
-print "×ª»»WordÎªÎÄ±¾ÎÄ¼ş...\n";
+# è½¬æ¢æ ¼å¼
+print "è½¬æ¢Wordä¸ºæ–‡æœ¬æ–‡ä»¶...\n";
 #&convertWord();
 `perl convertword.pl`;
 
-# ¹Ø¼ü×ÖÉèÖÃ
+# å…³é”®å­—è®¾ç½®
 
-#my @KEY_WORD = ("ÉêÇë²¿ÃÅ","ÉêÇëÊ±¼ä","ÉêÇëÈË");
+#my @KEY_WORD = ("ç”³è¯·éƒ¨é—¨","ç”³è¯·æ—¶é—´","ç”³è¯·äºº");
 my @KEY_WORD = ();
 
-# »ñÈ¡µ±Ç°Ä¿Â¼µÄÍêÕûÂ·¾¶ĞÅÏ¢¡£
+# è·å–å½“å‰ç›®å½•çš„å®Œæ•´è·¯å¾„ä¿¡æ¯ã€‚
 my $currentDir = getcwd;
-print "µ±Ç°Ä¿Â¼: ".$currentDir."\n";
+print "å½“å‰ç›®å½•: ".$currentDir."\n";
 
-# ÅäÖÃÎÄ¼ş
-my $cfgFile = "$currentDir/¹Ø¼ü×Ö.txt";
+# é…ç½®æ–‡ä»¶
+my $cfgFile = "$currentDir/å…³é”®å­—.txt";
 
-# ÉèÖÃÔ´ÎÄ¼ş¼Ğ
+# è®¾ç½®æºæ–‡ä»¶å¤¹
 my $SRC_PATH = "$currentDir/TXT/";
 
-# ÉèÖÃÁÙÊ±ÎÄ¼ş¼Ğ
+# è®¾ç½®ä¸´æ—¶æ–‡ä»¶å¤¹
 my $TMP_PATH = "$currentDir/Temp/";
 
-# ÉèÖÃÄ¿±êÎÄ¼ş¼Ğ
+# è®¾ç½®ç›®æ ‡æ–‡ä»¶å¤¹
 my $DEST_PATH="$currentDir/Result/";
 
-# Èç¹ûÄ¿±êÎÄ¼ş¼Ğ²»´æÔÚ£¬Ôò´´½¨ÎÄ¼ş¼Ğ
+# å¦‚æœç›®æ ‡æ–‡ä»¶å¤¹ä¸å­˜åœ¨ï¼Œåˆ™åˆ›å»ºæ–‡ä»¶å¤¹
 mkdir( $DEST_PATH, 0777 ) if ( !-d $DEST_PATH);
 
-opendir TEMP, ${SRC_PATH} or die "ÎŞ·¨´ò¿ª".$SRC_PATH."Ä¿Â¼£¬Çë¼ì²éÒ»ÏÂÄ¿Â¼ÊÇ·ñ´æÔÚ£¡";
+opendir TEMP, ${SRC_PATH} or die "æ— æ³•æ‰“å¼€".$SRC_PATH."ç›®å½•ï¼Œè¯·æ£€æŸ¥ä¸€ä¸‹ç›®å½•æ˜¯å¦å­˜åœ¨ï¼";
 
 @KEY_WORD=&readConfig();
 
-# ¶ÁÈ¡Ä¿Â¼ÏÂËùÓĞÎÄ¼ş
+# è¯»å–ç›®å½•ä¸‹æ‰€æœ‰æ–‡ä»¶
 my @filelist = readdir TEMP; 
 
 my $srcFile='';
@@ -58,16 +58,16 @@ my $flag=0;
 
 my $line='';
 
-# Èç¹ûÄ¿±êÎÄ¼ş¼Ğ²»´æÔÚ£¬Ôò´´½¨ÎÄ¼ş¼Ğ
+# å¦‚æœç›®æ ‡æ–‡ä»¶å¤¹ä¸å­˜åœ¨ï¼Œåˆ™åˆ›å»ºæ–‡ä»¶å¤¹
 mkdir($DEST_PATH, 0777) if(! -d $DEST_PATH);
 
-# É¾³ı²¢ĞÂ½¨ÁÙÊ±Ä¿Â¼
+# åˆ é™¤å¹¶æ–°å»ºä¸´æ—¶ç›®å½•
 deldir($TMP_PATH) if( -d $TMP_PATH);
 mkdir($TMP_PATH, 0777) if(! -d $TMP_PATH);
 
-open(FH_PS, ">$destFile") or die "ÎŞ·¨´ò¿ªÎÄ¼ş: $destFile <$!>";
+open(FH_PS, ">$destFile") or die "æ— æ³•æ‰“å¼€æ–‡ä»¶: $destFile <$!>";
 
-# Êä³öÎÄ¼şÍ·
+# è¾“å‡ºæ–‡ä»¶å¤´
 my $header = (join ',', @KEY_WORD).",";
 print FH_PS $header."\n";
 
@@ -80,8 +80,8 @@ foreach (@filelist) {
 
     print "\n";
 
-	open(FH_B,">$srcFileBackup") or die "ÎŞ·¨´ò¿ªÎÄ¼ş: $srcFileBackup";
-	open(FH,$srcFile) or die "ÎŞ·¨´ò¿ªÎÄ¼ş: $srcFile";
+	open(FH_B,">$srcFileBackup") or die "æ— æ³•æ‰“å¼€æ–‡ä»¶: $srcFileBackup";
+	open(FH,$srcFile) or die "æ— æ³•æ‰“å¼€æ–‡ä»¶: $srcFile";
 
 	while(<FH>){
 		#chomp;
@@ -91,21 +91,21 @@ foreach (@filelist) {
 		#s/\n\n/\n/g;
 		
 		print FH_B $_;
-		#s/Ìá½»ÈË\r/\nÌá½»ÈË|/;
-		#s/\rÌá½»µ¥Î»\r/\nÌá½»µ¥Î»|/;
+		#s/æäº¤äºº\r/\næäº¤äºº|/;
+		#s/\ræäº¤å•ä½\r/\næäº¤å•ä½|/;
 	
 	}
 	close(FH_B);
 	close(FH);
 	
-	open(FH_B,$srcFileBackup) or die "ÎŞ·¨´ò¿ªÎÄ¼ş: $srcFileBackup";
+	open(FH_B,$srcFileBackup) or die "æ— æ³•æ‰“å¼€æ–‡ä»¶: $srcFileBackup";
 
 	my $result='';
 	while(<FH_B>){
 		chomp;
 		$line = $_;
 		foreach my $key(@KEY_WORD){
-			# ¸ù¾İ¹Ø¼ü×ÖÆ¥ÅäÏàÓ¦µÄÖµ
+			# æ ¹æ®å…³é”®å­—åŒ¹é…ç›¸åº”çš„å€¼
 			if($line=~/$key\|(.+?)\|(.+)/){
 				my $value = $1;
 				
@@ -123,14 +123,14 @@ foreach (@filelist) {
 }
 
 close(FH_PS);
-# É¾³ıÁÙÊ±Ä¿Â¼
+# åˆ é™¤ä¸´æ—¶ç›®å½•
 deldir($TMP_PATH) if( -d $TMP_PATH);
 print "All files are processed.\nTotal file processed: $count\n";
 
 
 sub readConfig(){
-	# ¶ÁÈ¡Åä¼şÎÄ¼ş - START
-	open(FH_CONFIG, "<$cfgFile") || die "ÎŞ·¨´ò¿ªÅäÖÃÎÄ¼ş : $cfgFile <$!>";
+	# è¯»å–é…ä»¶æ–‡ä»¶ - START
+	open(FH_CONFIG, "<$cfgFile") || die "æ— æ³•æ‰“å¼€é…ç½®æ–‡ä»¶ : $cfgFile <$!>";
 	my @words=();
 	while(<FH_CONFIG>) {
 		chomp;
@@ -147,7 +147,7 @@ sub readConfig(){
 
 	close FH_CONFIG;
 	trimList(@words);
-	# ¶ÁÈ¡Åä¼şÎÄ¼ş - END
+	# è¯»å–é…ä»¶æ–‡ä»¶ - END
 }
 
 
